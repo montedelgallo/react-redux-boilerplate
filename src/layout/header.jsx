@@ -1,7 +1,34 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as actions from '../actions';
 
-export default class Header extends Component {
+class Header extends Component {
+
+
+  // This is just for boilerplate purposes
+
+
+  renderLinks() {
+    if (this.props.authenticated) {
+      return (
+        <li className="nav-item">
+          <button className="btn btn-danger" onClick={this.props.signoutUser}>
+            SignOut
+          </button>
+        </li>
+      )
+    } else {
+      return (
+        <li className="nav-item" key={4}>
+          <button className="btn btn-success" onClick={this.props.signinUser}> 
+            SignIn
+          </button>
+        </li>
+      )
+    }    
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-lg bg-light fixed-top">
@@ -20,6 +47,10 @@ export default class Header extends Component {
               <li className="nav-item" >
                 <Link className="nav-link" to="/about" >About</Link>
               </li>
+              <li className="nav-item" >
+                <Link className="nav-link" to="/protected" >Protected</Link>
+              </li>
+              {this.renderLinks()}
             </ul>
           </div>
         </div>
@@ -27,3 +58,10 @@ export default class Header extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  // this state its gonna be null unless there is an error
+  return {authenticated: state.auth.authenticated}
+}
+
+export default connect(mapStateToProps, actions)(Header)
