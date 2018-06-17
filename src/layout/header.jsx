@@ -21,9 +21,7 @@ class Header extends Component {
     } else {
       return (
         <li className="nav-item" key={4}>
-          <button className="btn btn-success" onClick={this.props.signinUser}> 
-            SignIn
-          </button>
+          <Link className="btn btn-success" to="/login" >Login</Link>
         </li>
       )
     }    
